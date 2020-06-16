@@ -13,40 +13,41 @@ client.on("message", message => {
     if(message.content.startsWith(`${prefix}animemes`))
     {
         getPost("animemes")
-            .then(content => message.channel.send(content.title, {files: [content.url]}))
-            .catch(error => console.log(error));
+        .then(content => { message.channel.send(content.title, {files: [content.url]})
+            .catch(() => message.channel.send(content.title + "\n" + content.url))});
     }
     else if(message.content.startsWith(`${prefix}animeirl`))
     {
         getPost("anime_irl")
-            .then(content => message.channel.send(content.title, {files: [content.url]}))
-            .catch(error => console.log(error));
+        .then(content => { message.channel.send(content.title, {files: [content.url]})
+            .catch(() => message.channel.send(content.title + "\n" + content.url))});
     }
     else if(message.content.startsWith(`${prefix}hanimemes`))
     {
         getPost("hentaimemes")
-            .then(content => message.channel.send(content.title, {files: [content.url]}))
-            .catch(error => console.log(error));
+        .then(content => { message.channel.send(content.title, {files: [content.url]})
+            .catch(() => message.channel.send(content.title + "\n" + content.url))});
     }
     else if(message.content.startsWith(`${prefix}moescape`))
     {
         getPost("moescape")
-            .then(content => message.channel.send(content.title, {files: [content.url]}))
-            .catch(error => console.log(error));
+        .then(content => { message.channel.send(content.title, {files: [content.url]})
+            .catch(() => message.channel.send(content.title + "\n" + content.url))});
     }
     else if(message.content.startsWith(`${prefix}fuckinweeb`))
     {
         getPost("whataweeb")
-            .then(content => message.channel.send(content.title, {files: [content.url]}))
-            .catch(error => console.log(error));
+            .then(content => { message.channel.send(content.title, {files: [content.url]})
+                .catch(() => message.channel.send(content.title + "\n" + content.url))});
     }
     else if(message.content.startsWith(`${prefix}test`))
     {
-        content => message.channel.send("Test", {files: ["https://i.imgur.com/YGVw2po.gif"]})
+        message.channel.send("Test", {files: ["https://i.redd.it/9uyqzi1l97551.png"]})
+            .catch(error => console.log(error));
     }
 })
 
-// Gets a random post from a random page between 1 and 5
+// Gets a random post from a random page between 1 and 10
 function getPost(subreddit)
 {
     var url = "https://www.reddit.com/r/" + subreddit + ".json?limit=100&after="
