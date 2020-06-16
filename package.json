@@ -3,10 +3,6 @@
   "version": "1.0.0",
   "description": "Discord bot",
   "main": "index.js",
-  "dependencies": {
-    "discord.js": "^12.2.0"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -19,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/MasterKuan/bot-chan/issues"
   },
-  "homepage": "https://github.com/MasterKuan/bot-chan#readme"
+  "homepage": "https://github.com/MasterKuan/bot-chan#readme",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  }
 }
