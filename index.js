@@ -10,7 +10,11 @@ client.once("ready", () => {
 })
 
 client.on("message", message => {
-    if(message.content.startsWith(`${prefix}animemes`))
+    if(message.content.startsWith(`${prefix}list`))
+    {
+        message.channel.send("Menu:\n!animemes\n!animeirl\n!hanimemes\n!moescape\n!fuckinweeb")
+    }
+    else if(message.content.startsWith(`${prefix}animemes`))
     {
         getPost("animemes")
         .then(content => { message.channel.send(content.title, {files: [content.url]})
