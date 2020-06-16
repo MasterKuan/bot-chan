@@ -1,0 +1,23 @@
+{
+  "name": "bot-chan",
+  "version": "1.0.0",
+  "description": "Discord bot",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MasterKuan/bot-chan.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MasterKuan/bot-chan/issues"
+  },
+  "homepage": "https://github.com/MasterKuan/bot-chan#readme"
+}
