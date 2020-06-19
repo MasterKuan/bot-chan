@@ -2,6 +2,9 @@ const Discord = require("discord.js");
 const fetch = require("node-fetch");
 const { prefix, token } = require("./config.json");
 const client = new Discord.Client();
+const subreddits = {"animeirl":"anime_irl", "animemes":"animemes", "fuckinweeb":"whataweeb", "hanimemes":"hentaimemes",
+                              "moescape":"moescape", "wanimemes":"wholesomeanimemes"};
+
 
 client.login(token);
 
@@ -10,46 +13,45 @@ client.once("ready", () => {
 })
 
 client.on("message", message => {
-    if(message.content.startsWith(`${prefix}list`))
+    if(message.content.startsWith(`${prefix}`))
     {
-        message.channel.send("Menu:\n!animemes\n!animeirl\n!hanimemes\n!moescape\n!fuckinweeb")
-    }
-    else if(message.content.startsWith(`${prefix}animemes`))
-    {
-        getPost("animemes")
-        .then(content => { message.channel.send(content.title, {files: [content.url]})
-            .catch(() => message.channel.send(content.title + "\n" + content.url))});
-    }
-    else if(message.content.startsWith(`${prefix}animeirl`))
-    {
-        getPost("anime_irl")
-        .then(content => { message.channel.send(content.title, {files: [content.url]})
-            .catch(() => message.channel.send(content.title + "\n" + content.url))});
-    }
-    else if(message.content.startsWith(`${prefix}hanimemes`))
-    {
-        getPost("hentaimemes")
-        .then(content => { message.channel.send(content.title, {files: [content.url]})
-            .catch(() => message.channel.send(content.title + "\n" + content.url))});
-    }
-    else if(message.content.startsWith(`${prefix}moescape`))
-    {
-        getPost("moescape")
-        .then(content => { message.channel.send(content.title, {files: [content.url]})
-            .catch(() => message.channel.send(content.title + "\n" + content.url))});
-    }
-    else if(message.content.startsWith(`${prefix}fuckinweeb`))
-    {
-        getPost("whataweeb")
-            .then(content => { message.channel.send(content.title, {files: [content.url]})
-                .catch(() => message.channel.send(content.title + "\n" + content.url))});
-    }
-    else if(message.content.startsWith(`${prefix}test`))
-    {
-        message.channel.send("Test", {files: ["https://i.redd.it/9uyqzi1l97551.png"]})
-            .catch(error => console.log(error));
+        var phrase = message.content.slice(1);
+        switch (phrase)
+        {
+            case "list":
+                var keys = Object.keys(subreddits);
+                var list_subreddits = "";
+                keys.forEach(key => list_subreddits += key + " => /r/" + subreddits[key]);
+                message.channel.send("Type in the phrase with a \"!\" before it to get an image from the supported subreddits.\n" +
+                                    "(phrase => subreddit)\n" +
+                                    "random => (random subreddit listed)\n" +
+                                    list_subreddits);
+                break;
+            case "random":
+                var keys = Object.keys(subreddits);
+                sendPost(message.channel, subreddits[keys[keys.length * Math.random() << 0]]);
+                break;
+            default:
+                if(subreddits.hasOwnProperty(phrase))
+                {
+                    sendPost(message.channel, subreddits[phrase]);
+                }
+                else
+                {
+                    message.channel.send("Did you call? Try \"!list\" to see how to trigger me.");
+                }
+                break;
+        }
     }
 })
+
+// Sends a message to the channel with an image from the given sub
+function sendPost(channel, sub)
+{
+    getPost(sub)
+        .then(content => { channel.send(content.title, {files: [content.url]})
+            .catch(() => channel.send(content.title + "\n" + content.url))});
+}
 
 // Gets a random post from a random page between 1 and 10
 function getPost(subreddit)
@@ -79,15 +81,17 @@ function getPost(subreddit)
                 var randomPost = posts_list[num];
 
                 counter++;
+                // After searching for 50 times, send a predetermined image and title
                 if(counter >= 50)
                 {
-                    randomPost = {"title":"404 Couldn't find something to post", "url":"https://i.imgur.com/YGVw2po.gif"}
+                    randomPost.title = "404 Couldn't find something to post"
+                    randomPost.url = "https://i.imgur.com/YGVw2po.gif"
                     break;
                 }
-                console.log(randomPost.url);
             }while (!randomPost.url.endsWith(".gif") &&
                     !randomPost.url.endsWith(".png") &&
-                    !randomPost.url.endsWith(".jpg"));
+                    !randomPost.url.endsWith(".jpg") &&
+                    !(randomPost.stickied == false)); // Must end with .gif/.png/.jpg and is not a stickied post
 
             return randomPost;
         });
