@@ -29,7 +29,8 @@ client.on("message", message => {
                 break;
             case "random":
                 var keys = Object.keys(subreddits);
-                sendPost(message.channel, subreddits[keys[keys.length * Math.random() << 0]]);
+                var sub = subreddits[keys[keys.length * Math.random() << 0]];
+                sendPost(message.channel, sub, "From /r/" + sub);
                 break;
             default:
                 if(subreddits.hasOwnProperty(phrase))
@@ -46,11 +47,11 @@ client.on("message", message => {
 })
 
 // Sends a message to the channel with an image from the given sub
-function sendPost(channel, sub)
+function sendPost(channel, sub, extra_message = "")
 {
     getPost(sub)
-        .then(content => { channel.send(content.title, {files: [content.url]})
-            .catch(() => channel.send(content.title + "\n" + content.url))});
+        .then(content => { channel.send(extra_message + content.title, {files: [content.url]})
+            .catch(() => channel.send(extra_message + content.title + "\n" + content.url))});
 }
 
 // Gets a random post from a random page between 1 and 10
