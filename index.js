@@ -30,7 +30,7 @@ client.on("message", message => {
             case "random":
                 var keys = Object.keys(subreddits);
                 var sub = subreddits[keys[keys.length * Math.random() << 0]];
-                sendPost(message.channel, sub, "From /r/" + sub);
+                sendPost(message.channel, sub, "From /r/" + sub + "\n");
                 break;
             default:
                 if(subreddits.hasOwnProperty(phrase))
