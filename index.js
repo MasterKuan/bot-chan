@@ -21,7 +21,7 @@ client.on("message", message => {
             case "list":
                 var keys = Object.keys(subreddits);
                 var list_subreddits = "";
-                keys.forEach(key => list_subreddits += key + " => /r/" + subreddits[key]);
+                keys.forEach(key => list_subreddits += key + " => /r/" + subreddits[key] + "\n");
                 message.channel.send("Type in the phrase with a \"!\" before it to get an image from the supported subreddits.\n" +
                                     "(phrase => subreddit)\n" +
                                     "random => (random subreddit listed)\n" +
