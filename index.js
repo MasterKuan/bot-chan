@@ -2,7 +2,7 @@ const Discord = require("discord.js");
 const fetch = require("node-fetch");
 const { prefix, token } = require("./config.json");
 const client = new Discord.Client();
-const subreddits = {"animeirl":"anime_irl", "animemes":"animemes", "fuckinweeb":"whataweeb", "hanimemes":"hentaimemes",
+const subreddits = {"animeirl":"anime_irl", "animemes":"goodanimemes", "fuckinweeb":"whataweeb", "hanimemes":"hentaimemes",
                               "moescape":"moescape", "wanimemes":"wholesomeanimemes"};
 
 
